@@ -6,13 +6,13 @@ This repository is dedicated to analyzing the performance of a multi-class image
 
 The Confusion Matrix module offers a visual representation of the classifier's performance. It helps us understand how the model's predictions compare to the actual labels for various dog breeds.
 
-### Display Options
+### Display Options - Click "Switch Display" button under the Confusion Matrix section
 
-#### Matrix Table
+#### 1. Matrix Table
 
 The Matrix Table is a straightforward representation of the confusion matrix. It displays the counts of true positives, true negatives, false positives, and false negatives for each dog breed.
 
-#### Heatmap
+#### 2. Heatmap
 
 The Heatmap is a graphical representation of the confusion matrix. It uses color to visualize patterns in the classifier's performance. Additionally, it includes an overlay to highlight areas with false positives, providing a more comprehensive view of classification errors.
 
