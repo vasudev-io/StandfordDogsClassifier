@@ -21,8 +21,10 @@ const ConfusionMatrixModule = () => {
   }, []);
 
   const renderConfusionMatrixTable = () => {
+    
     if (!confusionMatrix) return null;
   
+    // create the header row of the table
     const headerRow = (
       <tr>
         <th>Actual\Predicted</th>
@@ -30,6 +32,7 @@ const ConfusionMatrixModule = () => {
       </tr>
     );
   
+    // generate table cells containing confusion matrix values 
     const bodyRows = classLabels.map((actualLabel, rowIndex) => (
       <tr key={`row-${actualLabel}`}>
         <td key={`actual-${actualLabel}`}>{actualLabel}</td>
@@ -41,6 +44,7 @@ const ConfusionMatrixModule = () => {
       </tr>
     ));
   
+    // return a div containing a table with a scrollable area
     return (
       <div style={{ overflow: 'auto', maxHeight: '500px' }}>
         <table>
@@ -53,24 +57,50 @@ const ConfusionMatrixModule = () => {
   
   const renderConfusionMatrixHeatmap = () => {
     if (!confusionMatrix) return null;
-  
-    // reverse to match matrix orientation
+
     const labels = classLabels;
     const reversedLabels = [...labels].reverse();
 
-    // 2D array
+    // 2D array for heatmap values
     const values = classLabels.map((actualLabel) =>
       classLabels.map((predictedLabel) => confusionMatrix[actualLabel][predictedLabel] || 0)
     ).reverse();
-  
+
+    // overlay values for false positives that occur in a custom range
+    const customRange = { min: 1, max: 10 };
+
+    const overlayValues = values.map(row =>
+      row.map(value => (value >= customRange.min && value <= customRange.max ? value : null))
+    );
+
+    const mapZToAlpha = (value: number | null) => {
+      if (value === null) return 0; 
+      return 0.15 + 0.9 * (value - 1) / 9;
+    };
+    
+    const overlayColorscale: [number, string][] = [];
+    for (let i = 0; i <= 10; i++) {
+      const alpha = mapZToAlpha(i);
+      overlayColorscale.push([i / 10, `rgba(255, 0, 0, ${alpha})`]);
+    }
+
     const data: Partial<Plotly.PlotData>[] = [
+      // main heatmap
       {
         x: labels,
         y: reversedLabels,
         z: values,
-        type: "heatmap" as const,
+        type: "heatmap",
         colorscale: "Viridis",
-        
+      },
+      // overlay for custom values - false positives
+      {
+        x: labels,
+        y: reversedLabels,
+        z: overlayValues,
+        type: "heatmap",
+        colorscale: overlayColorscale,
+        showscale: false,
       },
     ];
   
@@ -111,8 +141,6 @@ const ConfusionMatrixModule = () => {
   };
 
   
-
-
   return (
     <Box sx={{ display: 'flex', height: `100%` }}>
       <Box sx={{ width: '100%', height: '100%' }}>
