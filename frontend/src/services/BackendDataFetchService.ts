@@ -42,6 +42,14 @@ class BackendDataFetchService implements DataFetchServiceAPI {
 
     return result;
   }
+  async getConfusionMatrix(): Promise<{ [actualLabel: string]: { [predictedLabel: string]: number; }; }> {
+    await this.checkData();
+
+    const result: { [actualLabel: string]: { [predictedLabel: string]: number } } = {};
+
+    return result;
+  }
+  
 }
 
 const backendDataFetchService = new BackendDataFetchService();
