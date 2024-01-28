@@ -85,6 +85,33 @@ class LocalDataFetchService implements DataFetchServiceAPI {
 
     return result;
   }
+  
+  async getConfusionMatrix(): Promise<{ [actualLabel: string]: { [predictedLabel: string]: number } }> {
+    await this.checkData();
+
+    const result: { [actualLabel: string]: { [predictedLabel: string]: number } } = {};
+
+    // Field Names
+    const labelField = 'Labels';
+    const predictionField = 'Predictions';
+
+    for (let i = 0; i < this.dataset[labelField].length; i++) {
+        const actualLabel = this.dataset[labelField][i];
+        const predictedLabel = this.dataset[predictionField][i];
+
+        if (!result[actualLabel]) {
+            result[actualLabel] = {};
+        }
+
+        if (!result[actualLabel][predictedLabel]) {
+            result[actualLabel][predictedLabel] = 0;
+        }
+
+        result[actualLabel][predictedLabel] += 1;
+    }
+
+    return result;
+}
 }
 
 const localDataFetchService = new LocalDataFetchService();
