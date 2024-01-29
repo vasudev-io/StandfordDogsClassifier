@@ -27,3 +27,13 @@ Sensitivity = True Positives / (True Positives + False Negatives)
 This score helps us understand how well the classifier performs in correctly classifying each dog breed, particularly in terms of minimizing false negatives.
 
 These modules aim to provide a clear and detailed analysis of the Stanford Dogs classifier's performance, enabling us to evaluate its strengths and weaknesses in breed classification.
+
+## Run Instructions
+
+1. Clone repository
+2. Open terminal and run the following commands
+
+```
+npm install
+npm run start -w frontend
+```
