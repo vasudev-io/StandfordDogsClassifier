@@ -20,7 +20,7 @@ The Heatmap is a graphical representation of the confusion matrix. It uses color
 
 ## 2. Sensitivity Score
 
-In addition to the Confusion Matrix, we also calculate the Sensitivity Score for each dog breed. Sensitivity, also known as the True Positive Rate, is an important metric that measures the classifier's ability to correctly identify positive cases (in this case, specific dog breeds) out of all actual positive cases. The Sensitivity Score for a breed is calculated using the following formula:
+Sensitivity, also known as the True Positive Rate, is an important metric that measures the classifier's ability to correctly identify positive cases (in this case, specific dog breeds) out of all actual positive cases. The Sensitivity Score for a breed is calculated using the following formula:
 
 Sensitivity = True Positives / (True Positives + False Negatives)
 
