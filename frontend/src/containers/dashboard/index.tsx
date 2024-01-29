@@ -5,19 +5,25 @@ import { IModule } from "../../components/modules/modules.type";
 import ClassificationModule from "../../components/modules/ClassificationBarModule";
 import StatisticsModule from "../../components/modules/StatisticsModule";
 import ConfusionMatrixModule from '../../components/modules/ConfusionMatrix';
+import SensitivityMatrixModule from '../../components/modules/SensitivityMatrix';
+
+
+
 
 const DashboardLayout = (() => {
   const theme = useMantineTheme();
 
-  // TODO: Add your modules here
+  // Added modules to the dashboard
   const modules: IModule[] = [
     { id: useId(), name: 'Statistics', component: StatisticsModule, width: 'half' },
     { id: useId(), name: 'Classification', component: ClassificationModule, width: 'half' },
     { id: useId(), name: 'ConfusionMatrix', component: ConfusionMatrixModule, width: 'half' },
+    { id: useId(), name: 'SensitivityMatrix', component: SensitivityMatrixModule, width: 'half'},
+    
   ];
 
   return (
-    <Box sx={{ flexGrow: 3, width: '100%', overflow: 'hidden', marginTop: theme.spacing.xs }}>
+    <Box sx={{ flexGrow: 3, width: '100%', overflow: 'auto', marginTop: theme.spacing.xs }}>
       <Grid
         justify="flex-start"
         align="flex-start"

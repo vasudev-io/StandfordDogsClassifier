@@ -111,8 +111,52 @@ class LocalDataFetchService implements DataFetchServiceAPI {
     }
 
     return result;
+
+  }
+
+  async getSensitivityScores(): Promise<{ [className: string]: number }> {
+    await this.checkData();
+  
+    // Field Names
+    const labelField = 'Labels';
+    const errorsField = 'Errors';
+  
+    const classCounts: { [className: string]: { truePositive: number, falseNegative: number } } = {};
+    
+    // Initialize counters for each class
+    this.dataset[labelField].forEach(label => {
+      if (!classCounts[label]) {
+        classCounts[label] = { truePositive: 0, falseNegative: 0 };
+      }
+    });
+  
+    // Count true positives and false negatives for each class based on errors
+    for (let i = 0; i < this.dataset[labelField].length; i++) {
+      const actualLabel = this.dataset[labelField][i];
+      
+      const error = this.dataset[errorsField][i];
+  
+      if (error === 'Correct') {
+        // If it's correct, it's a true positive
+        classCounts[actualLabel].truePositive++;
+      } else {
+        // If it's an error (not correct), it's a false negative
+        classCounts[actualLabel].falseNegative++;
+      }
+    }
+  
+    // Calculate sensitivity for each class
+    const sensitivityScores: { [className: string]: number } = {};
+    Object.keys(classCounts).forEach(className => {
+      const { truePositive, falseNegative } = classCounts[className];
+      sensitivityScores[className] = truePositive / (truePositive + falseNegative);
+    });
+  
+    return sensitivityScores;
+  }
+  
 }
-}
+
 
 const localDataFetchService = new LocalDataFetchService();
 export default localDataFetchService;

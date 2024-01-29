@@ -49,7 +49,17 @@ class BackendDataFetchService implements DataFetchServiceAPI {
 
     return result;
   }
+
+  async getSensitivityScores(): Promise<{ [classname: string]: number }> {
+    await this.checkData();
+
+    const result: { [classname: string]: number } = {};
+
+    return result;
+  }
   
+  
+
 }
 
 const backendDataFetchService = new BackendDataFetchService();
