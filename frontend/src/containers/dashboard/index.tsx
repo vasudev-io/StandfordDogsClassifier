@@ -7,10 +7,7 @@ import StatisticsModule from "../../components/modules/StatisticsModule";
 import ConfusionMatrixModule from '../../components/modules/ConfusionMatrix';
 import SensitivityMatrixModule from '../../components/modules/SensitivityMatrix';
 
-
-
-
-const DashboardLayout = (() => {
+const DashboardLayout = () => {
   const theme = useMantineTheme();
 
   // Added modules to the dashboard
@@ -18,8 +15,7 @@ const DashboardLayout = (() => {
     { id: useId(), name: 'Statistics', component: StatisticsModule, width: 'half' },
     { id: useId(), name: 'Classification', component: ClassificationModule, width: 'half' },
     { id: useId(), name: 'ConfusionMatrix', component: ConfusionMatrixModule, width: 'half' },
-    { id: useId(), name: 'SensitivityMatrix', component: SensitivityMatrixModule, width: 'half'},
-    
+    { id: useId(), name: 'SensitivityMatrix', component: SensitivityMatrixModule, width: 'half' },
   ];
 
   return (
@@ -36,24 +32,32 @@ const DashboardLayout = (() => {
       >
         {modules.map((module) => (
           <Grid.Col
-            key={'grid-module-' + module.id}
-            span={module.width === 'half' ? 6 : 12}
-            sx={{ display: 'flex', justifyContent: 'center' }} // Center-align modules
-          >
-            {/* ScrollArea specific to the ConfusionMatrixModule */}
-            {module.name === 'ConfusionMatrix' ? (
-              <ScrollArea sx={{ height: '100%' }}>
-                <module.component />
-              </ScrollArea>
-            ) : (
+          key={'grid-module-' + module.id}
+          span={8} // Each module occupies 8 grid columns
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center', 
+            minHeight: '300px', 
+            backgroundColor: theme.colors.gray[1], 
+            borderRadius: theme.radius.sm, 
+            boxShadow: theme.shadows.xs, 
+          }}
+        >
+          {/* ScrollArea specific to the ConfusionMatrixModule */}
+          {module.name === 'ConfusionMatrix' ? (
+            <ScrollArea sx={{ height: '100%' }}>
               <module.component />
-            )}
-          </Grid.Col>
+            </ScrollArea>
+          ) : (
+            <module.component />
+          )}
+        </Grid.Col>
         ))}
       </Grid>
     </Box>
   );
-});
+};
 
 const DashboardPage = () => {
   const theme = useMantineTheme();
@@ -68,7 +72,7 @@ const DashboardPage = () => {
         gap: 0,
         paddingTop: theme.spacing.xl,
         paddingBottom: theme.spacing.xl,
-        backgroundColor: theme.colors.gray[2]
+        backgroundColor: theme.colors.gray[2],
       }}
     >
       <Group
@@ -81,22 +85,26 @@ const DashboardPage = () => {
         }}
       >
         <Stack sx={{ gap: 0, flexGrow: 0 }}>
-          <Text sx={{
-            fontFamily: 'Noto Sans',
-            fontSize: theme.fontSizes.lg * 2,
-            letterSpacing: 0,
-            color: theme.black,
-            fontWeight: 700
-          }}>
+          <Text
+            sx={{
+              fontFamily: 'Noto Sans',
+              fontSize: theme.fontSizes.lg * 2,
+              letterSpacing: 0,
+              color: theme.black,
+              fontWeight: 700,
+            }}
+          >
             Data Analysis Dashboard
           </Text>
-          <Text sx={{
-            fontFamily: 'Noto Sans',
-            fontSize: theme.fontSizes.xl,
-            color: theme.colors.gray[8],
-            fontWeight: 300,
-            marginLeft: theme.spacing.xs * 0.2
-          }}>
+          <Text
+            sx={{
+              fontFamily: 'Noto Sans',
+              fontSize: theme.fontSizes.xl,
+              color: theme.colors.gray[8],
+              fontWeight: 300,
+              marginLeft: theme.spacing.xs * 0.2,
+            }}
+          >
             Stanford Dogs Classification Dataset
           </Text>
         </Stack>
@@ -104,6 +112,6 @@ const DashboardPage = () => {
       <DashboardLayout />
     </Stack>
   );
-}
+};
 
 export default DashboardPage;
