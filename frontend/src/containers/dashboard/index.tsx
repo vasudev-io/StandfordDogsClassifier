@@ -6,6 +6,7 @@ import ClassificationModule from "../../components/modules/ClassificationBarModu
 import StatisticsModule from "../../components/modules/StatisticsModule";
 import ConfusionMatrixModule from '../../components/modules/ConfusionMatrix';
 import SensitivityMatrixModule from '../../components/modules/SensitivityMatrix';
+import HistogramModule from '../../components/modules/HistogramModule';
 
 const DashboardLayout = () => {
   const theme = useMantineTheme();
@@ -16,6 +17,7 @@ const DashboardLayout = () => {
     { id: useId(), name: 'Classification', component: ClassificationModule, width: 'half' },
     { id: useId(), name: 'ConfusionMatrix', component: ConfusionMatrixModule, width: 'half' },
     { id: useId(), name: 'SensitivityMatrix', component: SensitivityMatrixModule, width: 'half' },
+    { id: useId(), name: 'Histogram', component: HistogramModule, width: 'half' },
   ];
 
   return (
